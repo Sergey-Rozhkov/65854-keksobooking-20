@@ -88,8 +88,6 @@ for (var j = 0; j < ADVERT_AMOUNTS; j++) {
 
 mapPinsElement.appendChild(fragment);
 
-// Карточка
-
 var cardTemplateElement = document.querySelector('#card')
   .content
   .querySelector('.map__card');
@@ -104,64 +102,40 @@ var renderCard = function (point) {
   card.querySelector('.popup__text--capacity').textContent = point.offer.rooms + ' комнаты для ' + point.offer.guests + ' гостей';
   card.querySelector('.popup__text--time').textContent = 'Заезд после ' + point.offer.checkin + ', выезд до ' + point.offer.checkout + '.';
 
-  // Наверное что-то   неправильно, не вижу, чтобы  выводился 'wifi' и часто  выводится  один 'conditioner'
-  for (var x = 0; x < point.offer.features.length; x++) {
-    var cardFeature = card.querySelector('.popup__feature');
-    if (point.offer.features[i] !== 'wifi' && cardFeature.classList.contains('popup__feature--wifi')) {
-      cardFeature.remove();
-    } else if (point.offer.features[i] !== 'dishwasher' && cardFeature.classList.contains('popup__feature--dishwasher')) {
-      cardFeature.remove();
-    } else if (point.offer.features[i] !== 'parking' && cardFeature.classList.contains('popup__feature--parking')) {
-      cardFeature.remove();
-    } else if (point.offer.features[i] !== 'washer' && cardFeature.classList.contains('popup__feature--washer')) {
-      cardFeature.remove();
-    } else if (point.offer.features[i] !== 'elevator' && cardFeature.classList.contains('popup__feature--elevator')) {
-      cardFeature.remove();
-    } else if (point.offer.features[i] !== 'conditioner' && cardFeature.classList.contains('popup__feature--conditioner')) {
-      cardFeature.remove();
-    }
-  }
+  card.querySelectorAll('.popup__feature').forEach(function (element) {
+    element.classList.add('hidden');
+  });
+
+  point.offer.features.forEach(function (feature) {
+    card.querySelector('.popup__feature--' + feature).classList.remove('hidden');
+  });
 
   card.querySelector('.popup__description').textContent = point.offer.description;
 
-  var cardPhotos = card.querySelector('.popup__photos');
+  var cardPhotosElement = card.querySelector('.popup__photos');
 
-  var getPhotoSrc = function (elementSrc) {
-    var cardImg = cardTemplateElement.querySelector('.popup__photo').cloneNode(true);
+  var getCardImg = function (src) {
+    var cardImgElement = cardTemplateElement.querySelector('.popup__photo').cloneNode(true);
 
-    cardImg.setAttribute('src', elementSrc);
+    cardImgElement.setAttribute('src', src);
 
-    return cardImg;
+    return cardImgElement;
   };
 
-  for (var y = 0; y < point.offer.photos.length; y++) {
-    cardPhotos.appendChild(getPhotoSrc(point.offer.photos[y]));
-  }
+  point.offer.photos.forEach(function (photo) {
+    cardPhotosElement.appendChild(getCardImg(photo));
+  });
 
-  // Не знаю как по-другому удалить  тег  img, который первоначально есть  в разметке. Иначе у меня выводится  и он (с пустым  src) и новые img
-  cardPhotos.children[0].remove();
+  cardPhotosElement.children[0].remove();
 
   card.querySelector('.popup__avatar').setAttribute('src', point.author.avatar);
 
   return card;
 };
 
-var mapFiltersContainer = document.querySelector('.map__filters-container');
+var mapFilterElement = document.querySelector('.map__filters-container');
 
-// Не получается  вставить   карточку  через insertAdjacentHTML, вставляется   [object HTMLElement], а не html:
-// var newElement = renderCard(adverts[0]);
-// mapFiltersContainer.insertAdjacentHTML('beforebegin', newElement);
-
-// а если сохранить  html строкой  в переменной и вставить   на страницу,  то  все нормально:
-// var test = '<div>hello</div>';
-// mapFiltersContainer.insertAdjacentHTML('beforebegin', test);
-
-// Получилось вывести  карточку  перед .map__filters-container только  через insertBefore, либо через appendChild, но в конец .map (то  есть  уже после .map__filters-container)
-
-// И как правильно, сначала добавить  карточку  в fragment, а потом  на страницу  или если она одна, то  сразу на страницу?
 var fragmentCard = document.createDocumentFragment();
 fragmentCard.appendChild(renderCard(adverts[0]));
 
-map.insertBefore(fragmentCard, mapFiltersContainer);
-
-// map.appendChild(fragmentCard);
+map.insertBefore(fragmentCard, mapFilterElement);
