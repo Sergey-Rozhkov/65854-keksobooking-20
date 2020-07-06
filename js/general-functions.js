@@ -22,7 +22,7 @@ window.generalFunctions = (function () {
   var onPopupEscPress = function (evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      hideCard();
+      window.popup.hideCard();
     }
   };
 
@@ -31,5 +31,5 @@ window.generalFunctions = (function () {
     getRandomItemArray: getRandomItemArray,
     getArrayRandomLength: getArrayRandomLength,
     onPopupEscPress: onPopupEscPress
-  }
+  };
 })();

@@ -63,5 +63,5 @@ window.card = (function () {
 
   return {
     renderCards: renderCards
-  }
+  };
 })();

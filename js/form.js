@@ -118,5 +118,5 @@ window.form = (function () {
     setFieldsetAdFormDisabled: setFieldsetAdFormDisabled,
     setSelectAdFormDisabled: setSelectAdFormDisabled,
     setFieldsetFiltersDisabled: setFieldsetFiltersDisabled
-  }
+  };
 })();

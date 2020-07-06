@@ -15,13 +15,12 @@ window.mapActive = (function () {
     item.addEventListener('focus', function (evt) {
       if (evt.key === 'Enter') {
         evt.preventDefault();
-        mapCardElements[index].classList.remove('hidden');
+        window.popup.mapCardElements[index].classList.remove('hidden');
       }
     });
   });
 
   var hidePins = function () {
-    console.log('test');
     mapPinElements.forEach(function (item) {
       item.classList.add('hidden');
     });

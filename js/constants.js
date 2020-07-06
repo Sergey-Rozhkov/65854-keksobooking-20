@@ -17,5 +17,5 @@ window.constants = (function () {
     ADVERT_FEATURES: ADVERT_FEATURES,
     ADVERT_PHOTOS: ADVERT_PHOTOS,
     ADVERT_AMOUNTS: ADVERT_AMOUNTS
-  }
+  };
 })();

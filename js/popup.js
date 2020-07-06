@@ -37,4 +37,8 @@ window.popup = (function () {
   popupCloseElements.forEach(function (item) {
     closePopupCard(item);
   });
+
+  return {
+    hideCard: hideCard
+  };
 })();
