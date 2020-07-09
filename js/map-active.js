@@ -48,13 +48,6 @@ window.mapActive = (function () {
 
   setCoords(mapPinMainElement, 'center');
 
-  mapPinMainElement.addEventListener('mousedown', function (evt) {
-    if (evt.button === 0) {
-      setActiveState();
-      setCoords(mapPinMainElement, 'bottom');
-    }
-  });
-
   mapPinMainElement.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       setActiveState();
@@ -77,5 +70,10 @@ window.mapActive = (function () {
     window.form.fieldsetFiltersFormElement.disabled = false;
 
     showPins();
+  };
+
+  return {
+    setActiveState: setActiveState,
+    setCoords: setCoords
   };
 })();
