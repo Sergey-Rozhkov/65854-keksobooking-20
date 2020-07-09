@@ -6,9 +6,10 @@ window.data = (function () {
   var collectAdverts = function () {
     for (var i = 0; i < window.constants.ADVERT_AMOUNTS; i++) {
       var number = window.generalFunctions.getRandomItemArray(window.constants.ADVERT_NUMBERS);
-      var advertLocationX = window.generalFunctions.getRandomNumberFromRange(0, 1160);
-      var advertLocationY = window.generalFunctions.getRandomNumberFromRange(130, 630);
-      var advertRooms = window.generalFunctions.getRandomNumberFromRange(1, 10);
+      var advertLocationX = window.generalFunctions.getRandomNumberFromRange(window.constants.LOCATION_X_MIN, window.constants.LOCATION_X_MAX) + 'px';
+      var advertLocationY = window.generalFunctions.getRandomNumberFromRange(window.constants.LOCATION_Y_MIN, window.constants.LOCATION_Y_MAX) + 'px';
+      var advertRooms = window.generalFunctions.getRandomNumberFromRange(window.constants.ROOMS_MIN, window.constants.ROOMS_MAX);
+      var advertGuests = window.generalFunctions.getRandomNumberFromRange(window.constants.GUESTS_MIN, window.constants.GUESTS_MAX);
 
       var advert = {
         author: {
@@ -20,7 +21,7 @@ window.data = (function () {
           price: window.constants.ADVERT_PRICES[window.generalFunctions.getRandomNumberFromRange(0, window.constants.ADVERT_PRICES.length - 1)],
           type: window.constants.ADVERT_TYPES[window.generalFunctions.getRandomNumberFromRange(0, window.constants.ADVERT_TYPES.length - 1)],
           rooms: advertRooms,
-          guests: advertRooms * 2,
+          guests: advertGuests,
           checkin: window.constants.ADVERT_CHECKINS_CHECKOUTS[window.generalFunctions.getRandomNumberFromRange(0, window.constants.ADVERT_CHECKINS_CHECKOUTS.length - 1)],
           checkout: window.constants.ADVERT_CHECKINS_CHECKOUTS[window.generalFunctions.getRandomNumberFromRange(0, window.constants.ADVERT_CHECKINS_CHECKOUTS.length - 1)],
           features: window.generalFunctions.getArrayRandomLength(window.constants.ADVERT_FEATURES),
@@ -28,8 +29,8 @@ window.data = (function () {
           photos: window.generalFunctions.getArrayRandomLength(window.constants.ADVERT_PHOTOS),
         },
         location: {
-          x: advertLocationX + 'px',
-          y: advertLocationY + 'px',
+          x: advertLocationX,
+          y: advertLocationY,
         }
       };
 

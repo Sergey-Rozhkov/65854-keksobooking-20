@@ -44,7 +44,7 @@ window.form = (function () {
       adFormPriceElement.setCustomValidity('Обязательное поле');
     } else if (!Number.isInteger(Number(adFormPriceElement.value))) {
       adFormPriceElement.setCustomValidity('Цена за ночь должна быть числом');
-    } else if (adFormPriceElement.value > 1000000) {
+    } else if (adFormPriceElement.value > window.constants.PRICE_MAX) {
       adFormPriceElement.setCustomValidity('Цена за ночь не может превышать 1 000 000 руб.');
     } else if (adFormPriceElement.value < minPrice) {
       adFormPriceElement.setCustomValidity('Цена за ночь должна быть не менее ' + minPrice + ' руб.');
@@ -55,17 +55,17 @@ window.form = (function () {
 
   var setMinPrice = function () {
     if (adFormTypeElement.value === 'bungalo') {
-      adFormPriceElement.placeholder = '0';
-      minPrice = 0;
+      adFormPriceElement.placeholder = window.constants.BUNGALO_PRICE_MIN;
+      minPrice = window.constants.BUNGALO_PRICE_MIN;
     } else if (adFormTypeElement.value === 'flat') {
-      adFormPriceElement.placeholder = '1 000';
-      minPrice = 1000;
+      adFormPriceElement.placeholder = window.constants.FLAT_PRICE_MIN;
+      minPrice = window.constants.FLAT_PRICE_MIN;
     } else if (adFormTypeElement.value === 'house') {
-      adFormPriceElement.placeholder = '5 000';
-      minPrice = 5000;
+      adFormPriceElement.placeholder = window.constants.HOUSE_PRICE_MIN;
+      minPrice = window.constants.HOUSE_PRICE_MIN;
     } else if (adFormTypeElement.value === 'palace') {
-      adFormPriceElement.placeholder = '10 000';
-      minPrice = 10000;
+      adFormPriceElement.placeholder = window.constants.PALACE_PRICE_MIN;
+      minPrice = window.constants.PALACE_PRICE_MIN;
     }
   };
 
