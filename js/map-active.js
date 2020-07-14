@@ -20,24 +20,6 @@ window.mapActive = (function () {
     });
   });
 
-  var hidePins = function () {
-    mapPinElements.forEach(function (item) {
-      item.classList.add('hidden');
-    });
-
-    document.removeEventListener('keydown', window.generalFunctions.onPopupEscPress);
-  };
-
-  hidePins();
-
-  var showPins = function () {
-    mapPinElements.forEach(function (item) {
-      item.classList.remove('hidden');
-    });
-
-    document.addEventListener('keydown', window.generalFunctions.onPopupEscPress);
-  };
-
   var setCoords = function (elem, position) {
     var box = elem.getBoundingClientRect();
     var boxTop = (position === 'center') ? (box.top + (box.width / 2) + pageYOffset) : (box.top + box.width + pageYOffset);
@@ -57,7 +39,11 @@ window.mapActive = (function () {
 
   var setActiveState = function () {
     mapElement.classList.remove('map--faded');
+
     adFormElement.classList.remove('ad-form--disabled');
+
+    // Вывод объявлений здесь нужно делать?  Если делаю в файле main.js (как было раньше), то  объявления выводятся  при неактивной  карте  и получается, что  функция hidePins выполняется  раньше, чем добавляются  объявления в html? И если так, то функции hidePins и showPins теперь  не нужны?
+    window.backend.load(window.pin.pinsHandler, window.generalFunctions.errorHandler);
 
     window.form.fieldsetAdFormElements.forEach(function (fieldset) {
       fieldset.disabled = false;
@@ -68,8 +54,6 @@ window.mapActive = (function () {
     });
 
     window.form.fieldsetFiltersFormElement.disabled = false;
-
-    showPins();
   };
 
   return {
