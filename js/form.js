@@ -2,27 +2,30 @@
 
 window.form = (function () {
   var adFormTitleElement = document.querySelector('#title');
+  var addressFormElement = document.querySelector('#address');
   var adFormPriceElement = document.querySelector('#price');
   var adFormTypeElement = document.querySelector('#type');
   var minPrice = 0;
   var fieldsetAdFormElements = document.querySelectorAll('.ad-form fieldset');
   var selectFiltersFormElements = document.querySelectorAll('.map__filters select');
   var fieldsetFiltersFormElement = document.querySelector('.map__features');
+  var submitFormElement = document.querySelector('.ad-form__submit');
+  var resetFormElement = document.querySelector('.ad-form__reset');
 
-  var setFieldsetAdFormDisabled = function () {
+  var setFieldsetAdFormDisabled = function (isDisabled) {
     fieldsetAdFormElements.forEach(function (fieldset) {
-      fieldset.disabled = true;
+      fieldset.disabled = isDisabled;
     });
   };
 
-  var setSelectAdFormDisabled = function () {
+  var setSelectAdFormDisabled = function (isDisabled) {
     selectFiltersFormElements.forEach(function (select) {
-      select.disabled = true;
+      select.disabled = isDisabled;
     });
   };
 
-  var setFieldsetFiltersDisabled = function () {
-    fieldsetFiltersFormElement.disabled = true;
+  var setFieldsetFiltersDisabled = function (isDisabled) {
+    fieldsetFiltersFormElement.disabled = isDisabled;
   };
 
   var errorTextField = function (element, valueMissingText, tooShortText, tooLongText) {
@@ -111,12 +114,52 @@ window.form = (function () {
     comparingFields();
   });
 
+  var setCoords = function (elem, position) {
+    var box = elem.getBoundingClientRect();
+    var boxTop = (position === 'center') ? (box.top + (box.width / 2) + pageYOffset) : (box.top + box.width + pageYOffset);
+    var boxLeft = box.left - (box.height / 2) + pageXOffset;
+
+    addressFormElement.value = Math.round(boxTop) + ', ' + Math.round(boxLeft);
+  };
+
+  var adFormElement = document.querySelector('.ad-form');
+
+  var cleanForm = function () {
+    adFormElement.reset();
+    setMinPrice();
+  };
+
+  var successSubmitHandler = function () {
+    cleanForm();
+    setCoords(window.mapActive.mapPinMainElement, 'center');
+    window.mapActive.setInactiveState();
+  };
+
+  var errorFormHandler = function () {
+    window.notices.showErrorPopup();
+  };
+
+  adFormElement.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(adFormElement), successSubmitHandler, errorFormHandler, true);
+    evt.preventDefault();
+  });
+
+  resetFormElement.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    cleanForm();
+    window.mapActive.setDefaultPinPosition();
+    setCoords(window.mapActive.mapPinMainElement, 'bottom');
+  });
+
   return {
     fieldsetAdFormElements: fieldsetAdFormElements,
     selectFiltersFormElements: selectFiltersFormElements,
     fieldsetFiltersFormElement: fieldsetFiltersFormElement,
+    submitFormElement: submitFormElement,
+    resetFormElement: resetFormElement,
     setFieldsetAdFormDisabled: setFieldsetAdFormDisabled,
     setSelectAdFormDisabled: setSelectAdFormDisabled,
-    setFieldsetFiltersDisabled: setFieldsetFiltersDisabled
+    setFieldsetFiltersDisabled: setFieldsetFiltersDisabled,
+    setCoords: setCoords
   };
 })();

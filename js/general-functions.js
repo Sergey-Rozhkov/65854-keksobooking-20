@@ -19,13 +19,6 @@ window.generalFunctions = (function () {
     return newArray;
   };
 
-  var onPopupEscPress = function (evt) {
-    if (evt.key === 'Escape') {
-      evt.preventDefault();
-      window.popup.hideCard();
-    }
-  };
-
   var errorHandler = function (errorMessage, selector, positionMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 10; margin: 0 auto; text-align: center; background-color: red;';
@@ -39,7 +32,6 @@ window.generalFunctions = (function () {
     getRandomNumberFromRange: getRandomNumberFromRange,
     getRandomItemArray: getRandomItemArray,
     getArrayRandomLength: getArrayRandomLength,
-    onPopupEscPress: onPopupEscPress,
     errorHandler: errorHandler
   };
 })();

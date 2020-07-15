@@ -1,7 +1,6 @@
 'use strict';
 
 window.card = (function () {
-  var adverts = window.data.collectAdverts();
   var mapElement = document.querySelector('.map');
 
   var cardTemplateElement = document.querySelector('#card')
@@ -45,23 +44,24 @@ window.card = (function () {
     cardPhotosElement.children[0].remove();
 
     card.querySelector('.popup__avatar').setAttribute('src', point.author.avatar);
+    card.classList.add('hidden');
 
     return card;
   };
 
   var mapFilterElement = document.querySelector('.map__filters-container');
 
-  var renderCards = function () {
-    var fragmentCard = document.createDocumentFragment();
+  var cardsHandler = function (list) {
+    var fragment = document.createDocumentFragment();
 
-    for (var x = 0; x < window.constants.ADVERT_AMOUNTS; x++) {
-      fragmentCard.appendChild(renderCard(adverts[x]));
+    for (var j = 0; j < window.constants.MAX_PINS_COUNT; j++) {
+      fragment.appendChild(renderCard(list[j]));
     }
 
-    return mapElement.insertBefore(fragmentCard, mapFilterElement);
+    return mapElement.insertBefore(fragment, mapFilterElement);
   };
 
   return {
-    renderCards: renderCards
+    cardsHandler: cardsHandler
   };
 })();
