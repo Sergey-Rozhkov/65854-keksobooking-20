@@ -15,6 +15,7 @@ window.pin = (function () {
     imgElement.setAttribute('alt', item.offer.title);
     pin.style.left = item.location.x + 'px';
     pin.style.top = item.location.y + 'px';
+    pin.classList.add('hidden');
 
     return pin;
   };

@@ -1,44 +1,58 @@
 'use strict';
 
 window.popup = (function () {
-  var mapCardElements = document.querySelectorAll('.map__card');
-  var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
-  var popupCloseElements = document.querySelectorAll('.popup__close');
 
-  var hideCard = function () {
+  var hideCards = function () {
+    var mapCardElements = document.querySelectorAll('.map__card');
+
     mapCardElements.forEach(function (item) {
       if (!item.classList.contains('hidden')) {
         item.classList.add('hidden');
+        document.removeEventListener('keydown', onPopupEscPress);
       }
     });
   };
 
-  hideCard();
+  var onPopupEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      hideCards();
+    }
+  };
 
-  var setCardByClickPin = function (pinElement, cardElement) {
+  var showCardByClickPin = function (pinElement, cardElement) {
     pinElement.addEventListener('click', function () {
-      hideCard();
+      hideCards();
       cardElement.classList.remove('hidden');
+      document.addEventListener('keydown', onPopupEscPress);
     });
   };
 
-  mapPinElements.forEach(function (item, index) {
-    setCardByClickPin(item, mapCardElements[index]);
-  });
-
-  var closePopupCard = function (button) {
-    button.addEventListener('click', function () {
-      button.closest('.map__card').classList.add('hidden');
+  var closePopupCard = function (closeButton) {
+    closeButton.addEventListener('click', function () {
+      closeButton.closest('.map__card').classList.add('hidden');
     });
-
-    document.removeEventListener('keydown', window.generalFunctions.onPopupEscPress);
   };
 
-  popupCloseElements.forEach(function (item) {
-    closePopupCard(item);
-  });
+  var popupCardClose = function () {
+    var popupCloseElements = document.querySelectorAll('.popup__close');
+
+    popupCloseElements.forEach(function (item) {
+      closePopupCard(item);
+    });
+  };
+
+  var showCard = function () {
+    var mapCardElements = document.querySelectorAll('.map__card');
+    var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
+
+    mapPinElements.forEach(function (item, index) {
+      showCardByClickPin(item, mapCardElements[index]);
+    });
+  };
 
   return {
-    hideCard: hideCard
+    popupCardClose: popupCardClose,
+    showCard: showCard,
   };
 })();

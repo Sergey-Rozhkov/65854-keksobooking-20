@@ -5,7 +5,7 @@ window.backend = (function () {
     OK: 200
   };
 
-  var prepareRequest = function (onLoad, onError, selector, positionMessage) {
+  var prepareRequest = function (onLoad, onError, selector, positionMessage, isForm) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -13,6 +13,9 @@ window.backend = (function () {
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onLoad(xhr.response);
+        if (isForm) {
+          window.notices.showSuccessPopup();
+        }
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText, selector, positionMessage);
       }
@@ -31,8 +34,16 @@ window.backend = (function () {
     return xhr;
   };
 
-  var load = function (onLoad, onError) {
-    var xhr = prepareRequest(onLoad, onError, '.map__filters-container', 'beforebegin');
+  var save = function (data, onLoad, onError, isForm) {
+    var xhr = prepareRequest(onLoad, onError, '.ad-form', 'beforeend', isForm);
+
+    xhr.open('POST', window.constants.API_URL);
+
+    xhr.send(data);
+  };
+
+  var load = function (onLoad, onError, isForm) {
+    var xhr = prepareRequest(onLoad, onError, '.map__filters-container', 'beforebegin', isForm);
 
     xhr.open('GET', window.constants.API_URL + '/data');
 
@@ -40,6 +51,7 @@ window.backend = (function () {
   };
 
   return {
+    save: save,
     load: load
   };
 })();

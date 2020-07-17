@@ -23,6 +23,8 @@ window.constants = (function () {
   var PALACE_PRICE_MIN = 10000;
   var API_URL = 'https://javascript.pages.academy/keksobooking';
   var MAX_PINS_COUNT = 8;
+  var MAP_PIN_DEFAULT_TOP = '375px';
+  var MAP_PIN_DEFAULT_LEFT = '570px';
 
   return {
     ADVERT_NUMBERS: ADVERT_NUMBERS,
@@ -46,6 +48,8 @@ window.constants = (function () {
     HOUSE_PRICE_MIN: HOUSE_PRICE_MIN,
     PALACE_PRICE_MIN: PALACE_PRICE_MIN,
     API_URL: API_URL,
-    MAX_PINS_COUNT: MAX_PINS_COUNT
+    MAX_PINS_COUNT: MAX_PINS_COUNT,
+    MAP_PIN_DEFAULT_TOP: MAP_PIN_DEFAULT_TOP,
+    MAP_PIN_DEFAULT_LEFT: MAP_PIN_DEFAULT_LEFT
   };
 })();

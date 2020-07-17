@@ -37,7 +37,7 @@ window.mainPinHandle = (function () {
         mapPinMainElement.style.left = (mapPinMainElement.offsetLeft - shift.x) + 'px';
       }
 
-      window.mapActive.setCoords(mapPinMainElement, 'bottom');
+      window.form.setCoords(mapPinMainElement, 'bottom');
     };
 
     var onMouseUp = function (upEvt) {
