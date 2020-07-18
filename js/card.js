@@ -53,8 +53,14 @@ window.card = (function () {
 
   var cardsHandler = function (list) {
     var fragment = document.createDocumentFragment();
+    var quantityCards = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
+    var mapCardElements = document.querySelectorAll('.map__card');
 
-    for (var j = 0; j < window.constants.MAX_PINS_COUNT; j++) {
+    mapCardElements.forEach(function (item) {
+      item.remove();
+    });
+
+    for (var j = 0; j < quantityCards; j++) {
       fragment.appendChild(renderCard(list[j]));
     }
 
