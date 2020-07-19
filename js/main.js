@@ -9,8 +9,8 @@ window.main = (function () {
       adverts.push(item);
     });
 
-    window.pin.pinsHandler(adverts);
-    window.card.cardsHandler(adverts);
+    window.pin.renderPins(adverts);
+    window.card.renderCards(adverts);
     window.mapActive.hidePins();
   };
 

@@ -14,8 +14,8 @@ window.filter = (function () {
       });
     }
 
-    window.pin.pinsHandler(sameHousingType);
-    window.card.cardsHandler(sameHousingType);
+    window.pin.renderPins(sameHousingType);
+    window.card.renderCards(sameHousingType);
     window.popup.showCard();
     window.popup.popupCardClose();
   };

@@ -51,7 +51,7 @@ window.card = (function () {
 
   var mapFilterElement = document.querySelector('.map__filters-container');
 
-  var cardsHandler = function (list) {
+  var renderCards = function (list) {
     var fragment = document.createDocumentFragment();
     var quantityCards = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
     var mapCardElements = document.querySelectorAll('.map__card');
@@ -68,6 +68,6 @@ window.card = (function () {
   };
 
   return {
-    cardsHandler: cardsHandler
+    renderCards: renderCards
   };
 })();

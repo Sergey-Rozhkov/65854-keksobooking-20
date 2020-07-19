@@ -19,7 +19,7 @@ window.pin = (function () {
     return pin;
   };
 
-  var pinsHandler = function (list) {
+  var renderPins = function (list) {
     var fragment = document.createDocumentFragment();
     var quantityPins = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
     var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
@@ -36,6 +36,6 @@ window.pin = (function () {
   };
 
   return {
-    pinsHandler: pinsHandler
+    renderPins: renderPins
   };
 })();
