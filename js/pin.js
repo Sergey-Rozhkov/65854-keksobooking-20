@@ -15,15 +15,20 @@ window.pin = (function () {
     imgElement.setAttribute('alt', item.offer.title);
     pin.style.left = item.location.x + 'px';
     pin.style.top = item.location.y + 'px';
-    pin.classList.add('hidden');
 
     return pin;
   };
 
-  var pinsHandler = function (list) {
+  var renderPins = function (list) {
     var fragment = document.createDocumentFragment();
+    var quantityPins = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
+    var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
 
-    for (var j = 0; j < window.constants.MAX_PINS_COUNT; j++) {
+    mapPinElements.forEach(function (item) {
+      item.remove();
+    });
+
+    for (var j = 0; j < quantityPins; j++) {
       fragment.appendChild(renderPin(list[j]));
     }
 
@@ -31,6 +36,6 @@ window.pin = (function () {
   };
 
   return {
-    pinsHandler: pinsHandler
+    renderPins: renderPins
   };
 })();

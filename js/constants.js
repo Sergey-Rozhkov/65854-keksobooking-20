@@ -22,7 +22,7 @@ window.constants = (function () {
   var HOUSE_PRICE_MIN = 5000;
   var PALACE_PRICE_MIN = 10000;
   var API_URL = 'https://javascript.pages.academy/keksobooking';
-  var MAX_PINS_COUNT = 8;
+  var MAX_PINS_COUNT = 5;
   var MAP_PIN_DEFAULT_TOP = '375px';
   var MAP_PIN_DEFAULT_LEFT = '570px';
 
