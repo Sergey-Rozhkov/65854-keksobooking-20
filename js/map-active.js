@@ -23,8 +23,8 @@ window.mapActive = (function () {
     });
   };
 
-  var showPins = function (tags) {
-    tags.forEach(function (item) {
+  var showPins = function (pins) {
+    pins.forEach(function (item) {
       item.classList.remove('hidden');
     });
   };
@@ -45,7 +45,13 @@ window.mapActive = (function () {
     window.form.setFieldsetAdFormDisabled(true);
     window.form.setSelectAdFormDisabled(true);
     window.form.setFieldsetFiltersDisabled(true);
+
+    window.form.submitFormElement.disabled = true;
+    window.form.resetFormElement.disabled = true;
+
     hidePins();
+    setDefaultPinPosition();
+    window.form.setCoords(mapPinMainElement, 'center');
 
     if (!mapElement.classList.contains('map--faded')) {
       mapElement.classList.add('map--faded');
@@ -54,12 +60,6 @@ window.mapActive = (function () {
     if (!adFormElement.classList.contains('ad-form--disabled')) {
       adFormElement.classList.add('ad-form--disabled');
     }
-
-    window.form.submitFormElement.disabled = true;
-    window.form.resetFormElement.disabled = true;
-
-    setDefaultPinPosition();
-    window.form.setCoords(mapPinMainElement, 'center');
   };
 
   setInactiveState();
@@ -71,21 +71,24 @@ window.mapActive = (function () {
   fillUpPinsAndCards();
 
   var setActiveState = function () {
+    window.form.setFieldsetAdFormDisabled(false);
+    window.form.setSelectAdFormDisabled(false);
+    window.form.setFieldsetFiltersDisabled(false);
+
+    window.form.submitFormElement.disabled = false;
+    window.form.resetFormElement.disabled = false;
+
+    window.pin.renderPins(window.main.adverts);
+    window.card.renderCards(window.main.adverts);
+    window.popup.showCard();
+    window.popup.popupCardClose();
+    window.form.setCoords(mapPinMainElement, 'bottom');
+
     mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
 
     mapElement.classList.remove('map--faded');
 
     adFormElement.classList.remove('ad-form--disabled');
-
-    window.form.setCoords(mapPinMainElement, 'bottom');
-    window.form.setFieldsetAdFormDisabled(false);
-    window.form.setSelectAdFormDisabled(false);
-    window.form.setFieldsetFiltersDisabled(false);
-    window.form.submitFormElement.disabled = false;
-    window.form.resetFormElement.disabled = false;
-    showPins(mapPinElements);
-    window.popup.showCard();
-    window.popup.popupCardClose();
   };
 
   return {

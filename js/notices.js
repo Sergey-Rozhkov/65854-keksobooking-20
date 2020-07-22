@@ -17,6 +17,7 @@ window.notices = (function () {
 
   var showSuccessPopup = function () {
     successPopupElement.classList.remove('hidden');
+
     document.addEventListener('keydown', onPressEscSuccessPopup);
     document.addEventListener('click', onClickSuccessPopup);
   };
@@ -24,6 +25,7 @@ window.notices = (function () {
   var onPressEscSuccessPopup = function (evt) {
     if (evt.key === 'Escape') {
       successPopupElement.classList.add('hidden');
+
       document.removeEventListener('keydown', onPressEscSuccessPopup);
     }
   };
@@ -31,14 +33,17 @@ window.notices = (function () {
   var onClickSuccessPopup = function (evt) {
     if (evt.target !== successMessageElement) {
       successPopupElement.classList.add('hidden');
+
       document.removeEventListener('click', onClickSuccessPopup);
     }
   };
 
   var showErrorPopup = function () {
     errorPopupElement.classList.remove('hidden');
+
     document.addEventListener('keydown', onPressEscErrorPopup);
     document.addEventListener('click', onClickErrorPopup);
+
     errorButtonElement.addEventListener('click', function () {
       errorPopupElement.classList.add('hidden');
     });
@@ -47,6 +52,7 @@ window.notices = (function () {
   var onPressEscErrorPopup = function (evt) {
     if (evt.key === 'Escape') {
       errorPopupElement.classList.add('hidden');
+
       document.removeEventListener('keydown', onPressEscErrorPopup);
     }
   };
@@ -54,6 +60,7 @@ window.notices = (function () {
   var onClickErrorPopup = function (evt) {
     if (evt.target !== errorMessageElement) {
       errorPopupElement.classList.add('hidden');
+
       document.removeEventListener('click', onClickErrorPopup);
     }
   };

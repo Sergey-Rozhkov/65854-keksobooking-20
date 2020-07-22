@@ -8,6 +8,7 @@ window.generalFunctions = (function () {
   var getRandomItemArray = function (arr) {
     var index = getRandomNumberFromRange(0, arr.length - 1);
     var result = arr[index];
+
     arr.splice(index, 1);
 
     return result;
@@ -21,17 +22,33 @@ window.generalFunctions = (function () {
 
   var errorHandler = function (errorMessage, selector, positionMessage) {
     var node = document.createElement('div');
+
     node.style = 'z-index: 10; margin: 0 auto; text-align: center; background-color: red;';
     node.style.fontSize = '28px';
-
     node.textContent = errorMessage;
+
     document.querySelector(selector).insertAdjacentElement(positionMessage, node);
+  };
+
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, window.constants.DEBOUNCE_INTERVAL);
+    };
   };
 
   return {
     getRandomNumberFromRange: getRandomNumberFromRange,
     getRandomItemArray: getRandomItemArray,
     getArrayRandomLength: getArrayRandomLength,
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    debounce: debounce
   };
 })();

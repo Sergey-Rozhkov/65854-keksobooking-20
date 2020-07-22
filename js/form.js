@@ -5,12 +5,12 @@ window.form = (function () {
   var addressFormElement = document.querySelector('#address');
   var adFormPriceElement = document.querySelector('#price');
   var adFormTypeElement = document.querySelector('#type');
-  var minPrice = 0;
+  var fieldsetFiltersFormElement = document.querySelector('.map__features');
   var fieldsetAdFormElements = document.querySelectorAll('.ad-form fieldset');
   var selectFiltersFormElements = document.querySelectorAll('.map__filters select');
-  var fieldsetFiltersFormElement = document.querySelector('.map__features');
   var submitFormElement = document.querySelector('.ad-form__submit');
   var resetFormElement = document.querySelector('.ad-form__reset');
+  var minPrice = 0;
 
   var setFieldsetAdFormDisabled = function (isDisabled) {
     fieldsetAdFormElements.forEach(function (fieldset) {
@@ -28,7 +28,7 @@ window.form = (function () {
     fieldsetFiltersFormElement.disabled = isDisabled;
   };
 
-  var errorTextField = function (element, valueMissingText, tooShortText, tooLongText) {
+  var showErrorTextField = function (element, valueMissingText, tooShortText, tooLongText) {
     element.addEventListener('invalid', function () {
       if (element.validity.valueMissing) {
         element.setCustomValidity(valueMissingText);
@@ -42,7 +42,7 @@ window.form = (function () {
     });
   };
 
-  var errorNumberField = function () {
+  var showErrorNumberField = function () {
     if (adFormPriceElement.validity.valueMissing) {
       adFormPriceElement.setCustomValidity('Обязательное поле');
     } else if (!Number.isInteger(Number(adFormPriceElement.value))) {
@@ -78,18 +78,18 @@ window.form = (function () {
     setMinPrice();
   });
 
-  var roomsElement = document.querySelector('#room_number');
+  var roomElement = document.querySelector('#room_number');
   var capacityElement = document.querySelector('#capacity');
   var adFormSubmitElement = document.querySelector('.ad-form__submit');
 
   var comparingFields = function () {
-    if (capacityElement.value > roomsElement.value) {
-      if (roomsElement.value === '100' && capacityElement.value !== '0') {
+    if (capacityElement.value > roomElement.value) {
+      if (roomElement.value === '100' && capacityElement.value !== '0') {
         capacityElement.setCustomValidity('При выборе "100 комнат", допускается только вариант "Не для гостей"');
       } else {
         capacityElement.setCustomValidity('Количество гостей не может быть больше количества комнат');
       }
-    } else if (capacityElement.value === '0' && roomsElement.value !== '100') {
+    } else if (capacityElement.value === '0' && roomElement.value !== '100') {
       capacityElement.setCustomValidity('При выборе "Не для гостей", допускается только вариант "100 комнат"');
     } else {
       capacityElement.setCustomValidity('');
@@ -109,8 +109,8 @@ window.form = (function () {
   setTimeInOut(adFormTimeoutElement, adFormTimeinElement);
 
   adFormSubmitElement.addEventListener('click', function () {
-    errorTextField(adFormTitleElement, 'Обязательное поле', 'Заголовок должен состоять минимум из 30-и символов', 'Заголовок не должен превышать 100 символов');
-    errorNumberField();
+    showErrorTextField(adFormTitleElement, 'Обязательное поле', 'Заголовок должен состоять минимум из 30-и символов', 'Заголовок не должен превышать 100 символов');
+    showErrorNumberField();
     comparingFields();
   });
 
@@ -148,7 +148,9 @@ window.form = (function () {
     evt.preventDefault();
     cleanForm();
     window.mapActive.setDefaultPinPosition();
-    setCoords(window.mapActive.mapPinMainElement, 'bottom');
+    window.mapActive.setInactiveState();
+    window.popup.hideCards();
+    window.filter.filterClear();
   });
 
   return {
