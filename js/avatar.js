@@ -22,4 +22,13 @@ window.avatar = (function () {
       reader.readAsDataURL(file);
     }
   });
+
+  var previewAvatarClear = function () {
+    avatarPreviewElement.src = window.constants.AVATAR_DEFAULT;
+  };
+
+  return {
+    previewAvatarClear: previewAvatarClear,
+    avatarPreviewElement: avatarPreviewElement
+  };
 })();

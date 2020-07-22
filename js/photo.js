@@ -4,13 +4,15 @@ window.photo = (function () {
   var photoFileElement = document.querySelector('.ad-form__upload input[type=file]');
   var photoPreviewBlockElement = document.querySelector('.ad-form__photo');
 
-  photoPreviewBlockElement.innerHTML = '<img>';
-  var photoPreviewElement = photoPreviewBlockElement.querySelector('img');
-  photoPreviewElement.alt = '';
-  photoPreviewElement.width = '70';
-  photoPreviewElement.height = '70';
-
   photoFileElement.addEventListener('change', function () {
+    photoPreviewBlockElement.innerHTML = '<img>';
+
+    var photoPreviewElement = photoPreviewBlockElement.querySelector('img');
+
+    photoPreviewElement.alt = '';
+    photoPreviewElement.width = '70';
+    photoPreviewElement.height = '70';
+
     var file = photoFileElement.files[0];
     var fileName = file.name.toLowerCase();
 
@@ -28,4 +30,12 @@ window.photo = (function () {
       reader.readAsDataURL(file);
     }
   });
+
+  var previewPhotoClear = function () {
+    photoPreviewBlockElement.querySelector('img').remove();
+  };
+
+  return {
+    previewPhotoClear: previewPhotoClear
+  };
 })();

@@ -30,25 +30,10 @@ window.generalFunctions = (function () {
     document.querySelector(selector).insertAdjacentElement(positionMessage, node);
   };
 
-  var debounce = function (cb) {
-    var lastTimeout = null;
-
-    return function () {
-      var parameters = arguments;
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        cb.apply(null, parameters);
-      }, window.constants.DEBOUNCE_INTERVAL);
-    };
-  };
-
   return {
     getRandomNumberFromRange: getRandomNumberFromRange,
     getRandomItemArray: getRandomItemArray,
     getArrayRandomLength: getArrayRandomLength,
-    errorHandler: errorHandler,
-    debounce: debounce
+    errorHandler: errorHandler
   };
 })();

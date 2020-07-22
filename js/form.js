@@ -133,6 +133,9 @@ window.form = (function () {
     cleanForm();
     setCoords(window.mapActive.mapPinMainElement, 'center');
     window.mapActive.setInactiveState();
+    window.filter.filterClear();
+    window.avatar.previewAvatarClear();
+    window.photo.previewPhotoClear();
   };
 
   var errorFormHandler = function () {
@@ -151,6 +154,8 @@ window.form = (function () {
     window.mapActive.setInactiveState();
     window.popup.hideCards();
     window.filter.filterClear();
+    window.avatar.previewAvatarClear();
+    window.photo.previewPhotoClear();
   });
 
   return {
