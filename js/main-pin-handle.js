@@ -50,6 +50,7 @@ window.mainPinHandle = (function () {
     if (evt.button === 0) {
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
+
       if (mapElement.classList.contains('map--faded')) {
         window.mapActive.setActiveState();
       }

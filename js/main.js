@@ -2,20 +2,21 @@
 
 window.main = (function () {
   var adverts = [];
+  var filteredAdverts = [];
 
   var fillUpAdverts = function (list) {
 
     list.forEach(function (item) {
       adverts.push(item);
     });
-
-    window.pin.renderPins(adverts);
-    window.card.renderCards(adverts);
-    window.mapActive.hidePins();
+    list.forEach(function (item) {
+      filteredAdverts.push(item);
+    });
   };
 
   return {
     fillUpAdverts: fillUpAdverts,
-    adverts: adverts
+    adverts: adverts,
+    filteredAdverts: filteredAdverts
   };
 })();

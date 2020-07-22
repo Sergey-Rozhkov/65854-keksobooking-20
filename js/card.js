@@ -52,9 +52,9 @@ window.card = (function () {
   var mapFilterElement = document.querySelector('.map__filters-container');
 
   var renderCards = function (list) {
+    var mapCardElements = document.querySelectorAll('.map__card');
     var fragment = document.createDocumentFragment();
     var quantityCards = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
-    var mapCardElements = document.querySelectorAll('.map__card');
 
     mapCardElements.forEach(function (item) {
       item.remove();

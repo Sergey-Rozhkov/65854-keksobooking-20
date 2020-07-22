@@ -2,25 +2,105 @@
 
 window.filter = (function () {
   var housingTypeElement = document.querySelector('#housing-type');
+  var housingPriceElement = document.querySelector('#housing-price');
+  var housingRoomsElement = document.querySelector('#housing-rooms');
+  var housingGuestsElement = document.querySelector('#housing-guests');
+  var housingFeaturesElement = document.querySelector('#housing-features');
+  var housingFeaturesElements = housingFeaturesElement.querySelectorAll('input[name="features"]');
+  var sameHouses = [];
+  var choosedFeatures = [];
 
-  var updatePins = function (housingType) {
-    var sameHousingType = [];
+  var filterClear = function () {
+    housingTypeElement.value = 'any';
+    housingPriceElement.value = 'any';
+    housingRoomsElement.value = 'any';
+    housingGuestsElement.value = 'any';
 
-    if (housingTypeElement.value === 'any') {
-      sameHousingType = window.main.adverts;
+    housingFeaturesElements.forEach(function (item) {
+      if (item.classList.contains('checked')) {
+        item.classList.remove('checked');
+        item.checked = false;
+      }
+    });
+  };
+
+  var updatePins = function () {
+    if (housingTypeElement.value === 'any' && housingPriceElement.value === 'any' && housingRoomsElement.value === 'any' && housingGuestsElement.value === 'any' && choosedFeatures === []) {
+      sameHouses = window.main.adverts;
     } else {
-      sameHousingType = window.main.adverts.filter(function (advert) {
-        return advert.offer.type === housingType;
+      sameHouses = window.main.filteredAdverts.filter(function (advert) {
+        return advert.offer.type === housingTypeElement.value || housingTypeElement.value === 'any';
+      }).filter(function (advert) {
+        if (housingPriceElement.value === 'low') {
+          return advert.offer.price < window.constants.LOW_PRICE;
+        } else if (housingPriceElement.value === 'middle') {
+          return advert.offer.price >= window.constants.LOW_PRICE && advert.offer.price <= window.constants.HIGH_PRICE;
+        } else if (housingPriceElement.value === 'high') {
+          return advert.offer.price > window.constants.HIGH_PRICE;
+        }
+        return true;
+      }).filter(function (advert) {
+        return advert.offer.rooms === parseInt(housingRoomsElement.value, 10) || housingRoomsElement.value === 'any';
+      }).filter(function (advert) {
+        return advert.offer.guests === parseInt(housingGuestsElement.value, 10) || housingGuestsElement.value === 'any';
+      }).filter(function (advert) {
+        var amount = 0;
+        advert.offer.features.filter(function (item) {
+          if (choosedFeatures.includes(item)) {
+            amount += 1;
+          }
+        });
+        if (choosedFeatures.length === amount) {
+          return advert;
+        }
+        return false;
       });
     }
 
-    window.pin.renderPins(sameHousingType);
-    window.card.renderCards(sameHousingType);
+    window.pin.renderPins(sameHouses);
+    window.card.renderCards(sameHouses);
     window.popup.showCard();
     window.popup.popupCardClose();
   };
 
   housingTypeElement.addEventListener('change', function () {
-    updatePins(housingTypeElement.value);
+    window.debounce(updatePins());
   });
+
+  housingPriceElement.addEventListener('change', function () {
+    window.debounce(updatePins());
+  });
+
+  housingRoomsElement.addEventListener('change', function () {
+    window.debounce(updatePins());
+  });
+
+  housingGuestsElement.addEventListener('change', function () {
+    window.debounce(updatePins());
+  });
+
+  var featureChange = function (item) {
+    item.addEventListener('change', function () {
+      if (item.classList.contains('checked')) {
+        item.classList.remove('checked');
+        choosedFeatures.forEach(function (featuresItem, index) {
+          if (featuresItem === item.value) {
+            choosedFeatures.splice(index, 1);
+          }
+        });
+      } else {
+        item.classList.add('checked');
+        choosedFeatures.push(item.value);
+      }
+      window.debounce(updatePins());
+    });
+  };
+
+  housingFeaturesElements.forEach(function (feature) {
+    featureChange(feature);
+  });
+
+  return {
+    filterClear: filterClear
+  };
 })();

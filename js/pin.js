@@ -20,9 +20,9 @@ window.pin = (function () {
   };
 
   var renderPins = function (list) {
+    var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
     var fragment = document.createDocumentFragment();
     var quantityPins = list.length > window.constants.MAX_PINS_COUNT ? window.constants.MAX_PINS_COUNT : list.length;
-    var mapPinElements = document.querySelectorAll('.map__pin[type="button"]');
 
     mapPinElements.forEach(function (item) {
       item.remove();
