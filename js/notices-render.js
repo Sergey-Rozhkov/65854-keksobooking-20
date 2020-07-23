@@ -1,7 +1,7 @@
 'use strict';
 
 window.noticesRender = (function () {
-  var bodyElement = document.querySelector('body');
+  var mainElement = document.querySelector('main');
 
   var successPopupTemplateElement = document.querySelector('#success')
       .content
@@ -10,7 +10,7 @@ window.noticesRender = (function () {
   var renderSuccessPopup = function () {
     var successPopup = successPopupTemplateElement.cloneNode(true);
 
-    return bodyElement.appendChild(successPopup);
+    return mainElement.appendChild(successPopup);
   };
 
   var errorPopupTemplateElement = document.querySelector('#error')
@@ -20,7 +20,7 @@ window.noticesRender = (function () {
   var renderErrorPopup = function () {
     var errorPopup = errorPopupTemplateElement.cloneNode(true);
 
-    return bodyElement.appendChild(errorPopup);
+    return mainElement.appendChild(errorPopup);
   };
 
   return {

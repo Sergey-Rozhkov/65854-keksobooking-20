@@ -43,14 +43,14 @@ window.form = (function () {
   };
 
   var showErrorNumberField = function () {
-    if (adFormPriceElement.validity.valueMissing) {
-      adFormPriceElement.setCustomValidity('Обязательное поле');
-    } else if (!Number.isInteger(Number(adFormPriceElement.value))) {
-      adFormPriceElement.setCustomValidity('Цена за ночь должна быть числом');
+    if (adFormPriceElement.value < minPrice) {
+      adFormPriceElement.setCustomValidity('Цена за ночь должна быть не менее ' + minPrice + ' руб.');
     } else if (adFormPriceElement.value > window.constants.PRICE_MAX) {
       adFormPriceElement.setCustomValidity('Цена за ночь не может превышать 1 000 000 руб.');
-    } else if (adFormPriceElement.value < minPrice) {
-      adFormPriceElement.setCustomValidity('Цена за ночь должна быть не менее ' + minPrice + ' руб.');
+    } else if (!Number.isInteger(Number(adFormPriceElement.value))) {
+      adFormPriceElement.setCustomValidity('Цена за ночь должна быть числом');
+    } else if (adFormPriceElement.validity.valueMissing) {
+      adFormPriceElement.setCustomValidity('Обязательное поле');
     } else {
       adFormPriceElement.setCustomValidity('');
     }
@@ -119,7 +119,7 @@ window.form = (function () {
     var boxTop = (position === 'center') ? (box.top + (box.width / 2) + pageYOffset) : (box.top + box.width + pageYOffset);
     var boxLeft = box.left - (box.height / 2) + pageXOffset;
 
-    addressFormElement.value = Math.round(boxTop) + ', ' + Math.round(boxLeft);
+    addressFormElement.value = Math.round(boxLeft) + ', ' + Math.round(boxTop);
   };
 
   var adFormElement = document.querySelector('.ad-form');

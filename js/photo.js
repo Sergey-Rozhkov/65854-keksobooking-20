@@ -32,7 +32,9 @@ window.photo = (function () {
   });
 
   var previewPhotoClear = function () {
-    photoPreviewBlockElement.querySelector('img').remove();
+    if (photoPreviewBlockElement.querySelector('img')) {
+      photoPreviewBlockElement.querySelector('img').remove();
+    }
   };
 
   return {
