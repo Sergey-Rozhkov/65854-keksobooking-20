@@ -60,15 +60,19 @@ window.form = (function () {
     if (adFormTypeElement.value === 'bungalo') {
       adFormPriceElement.placeholder = window.constants.BUNGALO_PRICE_MIN;
       minPrice = window.constants.BUNGALO_PRICE_MIN;
+      adFormPriceElement.setAttribute('min', window.constants.BUNGALO_PRICE_MIN);
     } else if (adFormTypeElement.value === 'flat') {
       adFormPriceElement.placeholder = window.constants.FLAT_PRICE_MIN;
       minPrice = window.constants.FLAT_PRICE_MIN;
+      adFormPriceElement.setAttribute('min', window.constants.FLAT_PRICE_MIN);
     } else if (adFormTypeElement.value === 'house') {
       adFormPriceElement.placeholder = window.constants.HOUSE_PRICE_MIN;
       minPrice = window.constants.HOUSE_PRICE_MIN;
+      adFormPriceElement.setAttribute('min', window.constants.HOUSE_PRICE_MIN);
     } else if (adFormTypeElement.value === 'palace') {
       adFormPriceElement.placeholder = window.constants.PALACE_PRICE_MIN;
       minPrice = window.constants.PALACE_PRICE_MIN;
+      adFormPriceElement.setAttribute('min', window.constants.PALACE_PRICE_MIN);
     }
   };
 
@@ -136,6 +140,7 @@ window.form = (function () {
     window.filter.filterClear();
     window.avatar.previewAvatarClear();
     window.photo.previewPhotoClear();
+    window.popup.hideCards();
   };
 
   var errorFormHandler = function () {
